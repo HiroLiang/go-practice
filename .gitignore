@@ -26,7 +26,6 @@ Thumbs.db
 
 # Environment files
 .env
-.env.*
 
 # If you use Air (hot reload)
 tmp/

@@ -15,12 +15,13 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/hello/{name}": {
+        "/test/hello/{name}": {
             "get": {
                 "description": "回應 Hello Name",
                 "tags": [
-                    "Hello"
+                    "Test"
                 ],
+                "summary": "Hello",
                 "parameters": [
                     {
                         "type": "string",
@@ -43,12 +44,13 @@ const docTemplate = `{
                 }
             }
         },
-        "/ping": {
+        "/test/ping": {
             "get": {
-                "description": "健康檢查 API",
+                "description": "Health check",
                 "tags": [
-                    "Health"
+                    "Test"
                 ],
+                "summary": "Ping",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -61,18 +63,116 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/user/all": {
+            "get": {
+                "description": "取得所有使用者",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get All Users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "description": "根據 ID 取得使用者",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Single User",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "something went wrong"
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 25
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Hiro"
+                }
+            }
         }
     }
 }`
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
-	Version:          "1.0",
+	Version:          "1.0.0",
 	Host:             "localhost:8080",
 	BasePath:         "/",
 	Schemes:          []string{},
-	Title:            "GoLang API Example",
-	Description:      "這是用 gin 製作的範例 API 文件",
+	Title:            "GoLang API Practice",
+	Description:      "練習用 Go lang 測試",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

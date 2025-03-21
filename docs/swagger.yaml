@@ -1,12 +1,31 @@
 basePath: /
+definitions:
+  model.ErrorResponse:
+    properties:
+      error:
+        example: something went wrong
+        type: string
+    type: object
+  model.User:
+    properties:
+      age:
+        example: 25
+        type: integer
+      id:
+        example: 1
+        type: integer
+      name:
+        example: Hiro
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
-  description: 這是用 gin 製作的範例 API 文件
-  title: GoLang API Example
-  version: "1.0"
+  description: 練習用 Go lang 測試
+  title: GoLang API Practice
+  version: 1.0.0
 paths:
-  /hello/{name}:
+  /test/hello/{name}:
     get:
       description: 回應 Hello Name
       parameters:
@@ -22,11 +41,12 @@ paths:
             additionalProperties:
               type: string
             type: object
+      summary: Hello
       tags:
-      - Hello
-  /ping:
+      - Test
+  /test/ping:
     get:
-      description: 健康檢查 API
+      description: Health check
       responses:
         "200":
           description: OK
@@ -34,6 +54,53 @@ paths:
             additionalProperties:
               type: string
             type: object
+      summary: Ping
       tags:
-      - Health
+      - Test
+  /user/{id}:
+    get:
+      description: 根據 ID 取得使用者
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get Single User
+      tags:
+      - User
+  /user/all:
+    get:
+      description: 取得所有使用者
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.ErrorResponse'
+      summary: Get All Users
+      tags:
+      - User
 swagger: "2.0"

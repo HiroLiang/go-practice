@@ -1,20 +1,21 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "這是用 gin 製作的範例 API 文件",
-        "title": "GoLang API Example",
+        "description": "練習用 Go lang 測試",
+        "title": "GoLang API Practice",
         "contact": {},
-        "version": "1.0"
+        "version": "1.0.0"
     },
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
-        "/hello/{name}": {
+        "/test/hello/{name}": {
             "get": {
                 "description": "回應 Hello Name",
                 "tags": [
-                    "Hello"
+                    "Test"
                 ],
+                "summary": "Hello",
                 "parameters": [
                     {
                         "type": "string",
@@ -37,12 +38,13 @@
                 }
             }
         },
-        "/ping": {
+        "/test/ping": {
             "get": {
-                "description": "健康檢查 API",
+                "description": "Health check",
                 "tags": [
-                    "Health"
+                    "Test"
                 ],
+                "summary": "Ping",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -53,6 +55,104 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "/user/all": {
+            "get": {
+                "description": "取得所有使用者",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get All Users",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.User"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/user/{id}": {
+            "get": {
+                "description": "根據 ID 取得使用者",
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get Single User",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "model.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string",
+                    "example": "something went wrong"
+                }
+            }
+        },
+        "model.User": {
+            "type": "object",
+            "properties": {
+                "age": {
+                    "type": "integer",
+                    "example": 25
+                },
+                "id": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Hiro"
                 }
             }
         }

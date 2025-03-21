@@ -1,0 +1,39 @@
+basePath: /
+host: localhost:8080
+info:
+  contact: {}
+  description: 這是用 gin 製作的範例 API 文件
+  title: GoLang API Example
+  version: "1.0"
+paths:
+  /hello/{name}:
+    get:
+      description: 回應 Hello Name
+      parameters:
+      - description: 使用者名稱
+        in: path
+        name: name
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      tags:
+      - Hello
+  /ping:
+    get:
+      description: 健康檢查 API
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      tags:
+      - Health
+swagger: "2.0"

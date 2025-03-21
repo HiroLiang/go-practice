@@ -1,0 +1,33 @@
+# Binary
+*.exe
+*.out
+*.test
+*.log
+
+# Output folders
+bin/
+build/
+dist/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.swp
+
+# Dependency files
+vendor/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Go test cache
+*.coverprofile
+
+# Environment files
+.env
+.env.*
+
+# If you use Air (hot reload)
+tmp/
+

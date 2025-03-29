@@ -1,0 +1,7 @@
+# Don't copy source files or git data into image
+.git
+.vscode
+*.go
+*.md
+Makefile
+*.log
